@@ -1,0 +1,83 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "WeatherAPI Bashkortostan",
+    "version": "1.0.0",
+    "description": "Прогноз погоды по городам Башкортостана с использованием WeatherAPI."
+  },
+  "servers": [
+    {
+      "url": "https://api.weatherapi.com/v1"
+    }
+  ],
+  "paths": {
+    "/forecast.json": {
+      "get": {
+        "operationId": "getWeatherForecast",
+        "description": "Получение прогноза погоды по городу.",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "query",
+            "required": true,
+            "description": "API-ключ WeatherAPI",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "description": "Название города (например, Уфа)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "days",
+            "in": "query",
+            "required": false,
+            "description": "Количество дней прогноза (1–5)",
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1,
+              "maximum": 5
+            }
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "required": false,
+            "description": "Язык ответа (по умолчанию — ru)",
+            "schema": {
+              "type": "string",
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешный ответ с прогнозом"
+          }
+        },
+        "security": [
+          {
+            "WeatherApiKey": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "WeatherApiKey": {
+        "type": "apiKey",
+        "in": "query",
+        "name": "key"
+      }
+    },
+    "schemas": {}
+  }
+}
